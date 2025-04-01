@@ -2,7 +2,7 @@
 
 #include <DHT.h>  
 
-#define DHTPIN 2       // Пин, к которому подключен DHT11
+#define DHTPIN 2       // Пин DHT11
 #define DHTTYPE DHT11  
 DHT dht(DHTPIN, DHTTYPE);
 
@@ -11,8 +11,8 @@ int lightSensor = A0;  // Пин фоторезистора
 
 // Пороги срабатывания
 int tempThreshold = 30;     // Температура для активации
-int humidityThreshold = 50; // (Можно добавить проверку влажности)
-int lightThreshold = 600;   // Яркость для активации (подбирается вручную)
+int humidityThreshold = 50; 
+int lightThreshold = 600;   // Яркость для активации 
 
 // Ноты "Happy Birthday"
 int melody[] = {262, 262, 294, 262, 349, 330,
@@ -28,16 +28,14 @@ void setup() {
   pinMode(buzzer, OUTPUT);
   pinMode(lightSensor, INPUT);
   dht.begin();
-  Serial.begin(9600); // Включаем Serial Monitor
+  Serial.begin(9600); 
 }
 
 void loop() {
-  // Читаем показания датчиков
-  float temp = dht.readTemperature(); // Температура в °C
-  float humidity = dht.readHumidity(); // Влажность в %
-  int light = analogRead(lightSensor); // Освещённость (0-1023)
+  float temp = dht.readTemperature(); 
+  float humidity = dht.readHumidity(); 
+  int light = analogRead(lightSensor); 
 
-  // Выводим данные в Serial Monitor
   Serial.print("Температура: ");
   Serial.print(temp);
   Serial.print("°C (порог: ");
@@ -58,19 +56,17 @@ void loop() {
 
   Serial.println("--------------------------------");
 
-  // Проверяем условия срабатывания
   if (temp > tempThreshold && light > lightThreshold) {
-    playMelody(); // Включаем буззер
+    playMelody(); 
   } else {
-    noTone(buzzer); // Выключаем звук
+    noTone(buzzer); 
   }
 
-  delay(2000); // Обновляем данные раз в 2 секунды
+  delay(2000); 
 }
 
-// Функция проигрывания мелодии
 void playMelody() {
-  Serial.println("🔥 ЖАРКО и СВЕТЛО! Включаю Happy Birthday! 🎶");
+  Serial.println("🔥 ЖАРКО и СВЕТЛО!");
 
   for (int i = 0; i < 25; i++) {
     int duration = 1000 / durations[i];
@@ -79,6 +75,6 @@ void playMelody() {
     noTone(buzzer);
   }
 
-  Serial.println("🎵 Мелодия окончена. Ждём нового срабатывания.");
+  Serial.println("Ждём нового срабатывания.");
 }
 
